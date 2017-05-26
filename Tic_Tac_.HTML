@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="Tracystyle.css">
+  <style media="screen">
+  #div > div > div {
+    border: solid black 3px;
+    width: 50px;
+    height: 50px;
+    float: left;
+  }
+
+  #div > div {
+    clear: both;
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id = "Heading"> Welcome to my Tic-Tac-Toe Game!</h1>
+
+    <h2 id = "Heading2"> Let's Play!</h2>
+
+    <button id="button">Start New Game</button>
+
+
+    <div id="div" class="">
+
+      <div>
+        <div id="box0" boardIdx="0" class="">
+
+        </div>
+        <div boardIdx="1" class="">
+
+        </div>
+        <div boardIdx="2" class="">
+
+        </div>
+      </div>
+
+
+      <div>
+        <div id= "box2" boardIdx="3" class="">
+
+        </div>
+        <div boardIdx="4" class="">
+
+        </div>
+        <div boardIdx="5" class="">
+
+        </div>
+      </div>
+      <div>
+        <div id= "box3"boardIdx="6" class="">
+        </div>
+        <div boardIdx="7" class="">
+        </div>
+        <div boardIdx="8"class="">
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin:0 auto;width:50%;padding-top:20px;">
+    </div>
+    <br/>
+    <script type="text/javascript">
+    var msg = document.getElementById("Heading2");
+    var button = document.getElementById("button");
+    var div = document.getElementById("div");
+    var player = 'X';
+    var board = ['', '', '', '', '', '', '', '', ''];
+    div.addEventListener('click', function (evt) {
+      var idx = evt.target.getAttribute('boardIdx');
+      if (board[idx] === '') {
+        board[idx] = player;
+        evt.target.innerHTML = player;
+        if (player === 'X') {
+          player = 'O';
+        } else {
+          player = 'X';
+        }
+        var winner = isWinner();       // check for a winner or draw
+        if (winner) {
+          if (winner === "tie") {
+            msg.innerHTML = "Ooops try Again";
+          } else {
+            msg.innerHTML = "Player " + winner + " wins!";
+          }
+        }
+      }
+    });
+
+    button.addEventListener('click', function() {
+      var div = document.getElementById('div');
+      for (var i = 0; i < div.children.length; i++) {
+        var row = div.children[i];
+        for (var j = 0; j < row.children.length; j++) {
+          row.children[j].innerHTML = "";
+        }
+        msg.innerHTML = "";
+      }
+
+    });
+    // return winner or tie: 'X', 'O', 'tie', null (if no winner or tie)
+    function isWinner() {
+      //  check winner
+      var b = board;
+      // top row
+      if (b[0] === b[1] && b[1] === b[2] && b[0] !== '') {
+        return b[0];
+      }
+      // mid row
+      if (b[3] === b[4] && b[4] === b[5] && b[3] !== '') {
+        return b[3];
+      }
+      // bottom row
+      if (b[6] === b[7] && b[7] === b[8] && b[6] !== '') {
+        return b[6];
+      }
+
+      // left col
+      if (b[0] === b[3] && b[3] === b[6] && b[0] !== '') {
+        return b[0];
+      }
+      // mid col
+      if (b[1] === b[4] && b[4] === b[7] && b[1] !== '') {
+        return b[1];
+      }
+      // right col
+      if (b[2] === b[5] && b[5] === b[8] && b[2] !== '') {
+        return b[2];
+      }
+
+      // top left to bottom right
+      if (b[0] === b[4] && b[4] === b[8] && b[4] !== '') {
+        return b[4];
+      }
+      // bottom left to top right
+      if (b[6] === b[4] && b[4] === b[2] && b[2] !== '') {
+        return b[2];
+      }
+
+      for (var i in board) {
+        if (board[i] === '') {
+          return null;
+        }
+      }
+      return 'tie';
+
+    }
+
+    </script>
+  </body>
+  </html>
